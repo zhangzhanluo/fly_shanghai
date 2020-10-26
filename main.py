@@ -42,6 +42,8 @@ def get_all_flights(direction='Departure'):
         print('{}: Working on page {}'.format(direction, i))
         r = requests.post(url, data=payload, headers=headers)
         if r.status_code != 200:
+            print('Status Code:', r.status_code)
+            print(r.text)
             raise NameError('Status Code Error')
         else:
             info = r.text
