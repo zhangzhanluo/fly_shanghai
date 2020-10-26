@@ -1,6 +1,7 @@
 import time
 import json
 import requests
+from datetime import date, timedelta
 
 
 def get_all_flights(direction='Departure'):
@@ -23,7 +24,8 @@ def get_all_flights(direction='Departure'):
                'airCities': '',
                'airCities2': '',
                'airCompanies': '',
-               'timeDays': 0,
+               # -1 means yesterday
+               'timeDays': -1,
                'timeSpan': '00:00-23:59',
                'flightNum': None}
 
@@ -59,7 +61,8 @@ def get_all_flights(direction='Departure'):
                 time.sleep(20)
 
     # Save the data
-    with open('Data/{}/{}.json'.format(direction, time.asctime().replace(':', '-')), 'w', encoding='utf-8') as f:
+    yesterday = date.today() + timedelta(days=-1)
+    with open('Data/{}/{}.json'.format(direction, yesterday.strftime('%A %y-%m-%d')), 'w', encoding='utf-8') as f:
         json.dump(all_flights, f, indent=True, ensure_ascii=False)
 
 
